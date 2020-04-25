@@ -43,7 +43,7 @@ class DishDetail extends Component {
                     <li key={comments.id}>
                         <div>
                             <p>{comments.comment}</p>
-                            <p>-- {comments.author} , {this.changeTime(date)}</p>
+                            <p>-- {comments.author} , {new Intl.DateTimeFormat('en-US' , {year :'numeric', month: 'short',day:'2-digit' }).format(new Date(Date.parse(comments.date)))}</p>
                         </div>
                     </li>
                 );
@@ -70,12 +70,14 @@ class DishDetail extends Component {
         // console.log(dish);
         if(dish!=null){
             return(
-                <div className="row">
-                    <div className="col-12 col-md-5 m-1">
-                        {this.renderDish(dish)}
-                    </div>
-                    <div className="col-12 col-md-5 m-1">
-                        {this.renderComment(dish.comments)}
+                <div class="container">
+                    <div className="row">
+                        <div className="col-12 col-md-5 m-1">
+                            {this.renderDish(dish)}
+                        </div>
+                        <div className="col-12 col-md-5 m-1">
+                            {this.renderComment(dish.comments)}
+                        </div>
                     </div>
                 </div>
             );
