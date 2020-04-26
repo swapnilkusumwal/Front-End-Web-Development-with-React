@@ -3,9 +3,8 @@ import { Card, CardImg, CardBody,CardText, CardTitle,
         Breadcrumb,BreadcrumbItem,Button,Modal,ModalBody,
         ModalHeader,Row,Col,Label} from "reactstrap";
 import {Control , LocalForm , Errors} from 'react-redux-form';
-
 import {Link } from 'react-router-dom';
-
+import {Loading} from './LoadingComponent'
     // changeTime(date){
     //     return new Date(date).toLocaleDateString("en-US",{
     //         year:"numeric",
@@ -157,9 +156,25 @@ import {Link } from 'react-router-dom';
         }
     }
     const DishDetail= (props) => {
-        // const {dish} = props.dish;
-        // console.log(dish);
-        if(props.dish!=null){
+        if(props.isLoading){
+            return(
+                <div className="container">
+                    <div className="row">
+                        <Loading/>
+                    </div>
+                </div>
+            );
+        }
+        else if(props.errMess){
+            return (
+                <div className="container">
+                    <div className="row">
+                        <h4>{this.props.errMess}</h4>
+                    </div>
+                </div>
+            )
+        }
+        else if(props.dish!=null){
             return(
                 <div className="container">
                     <div className="row">
@@ -171,7 +186,7 @@ import {Link } from 'react-router-dom';
                                 {props.dish.name}
                             </BreadcrumbItem>
                         </Breadcrumb>
-                        <div class="col-12">
+                        <div className="col-12">
                             <h3>{props.dish.name}</h3>
                             <hr />
                         </div>
