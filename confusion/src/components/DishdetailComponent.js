@@ -34,7 +34,7 @@ import {Link } from 'react-router-dom';
 
         handleSubmit(values){
             this.toggleModal();
-            alert(JSON.stringify(values));
+            this.props.addComment(this.props.dishId,values.rating,values.author,values.comment);
         }
 
         render(){
@@ -124,7 +124,7 @@ import {Link } from 'react-router-dom';
             )
         }
     }
-    function RenderComment({comments}){
+    function RenderComment({comments,addComment,dishId}){
         if(comments!=null){
             let list= comments.map((comments) =>{
                 // let date=comments.date;
@@ -144,7 +144,7 @@ import {Link } from 'react-router-dom';
                     <ul className="list-unstyled">
                         {list}
                     </ul>
-                    <CommentForm />
+                    <CommentForm dishId={dishId} addComment={addComment}/>
                 </div>
             )
         }
@@ -181,7 +181,9 @@ import {Link } from 'react-router-dom';
                             <RenderDish dish={props.dish} />
                         </div>
                         <div className="col-12 col-md-5 m-1">
-                            <RenderComment comments={props.comments}/ >
+                            <RenderComment comments={props.comments}
+                            addComment={props.addComment}
+                            dishId={props.dish.id}/ >
                         </div>
                     </div>
                 </div>
