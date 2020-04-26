@@ -6,6 +6,8 @@ import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
+import About from './AboutComponent';
+
 import {Switch , Route, Redirect} from 'react-router-dom';
 import { COMMENTS } from "../shared/comments";
 import { PROMOTIONS } from "../shared/promotions";
@@ -40,6 +42,12 @@ class Main extends Component {
           comments={this.state.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} />
     );
   };
+
+  const Leader = () =>{
+      return(
+        <About leaders={this.state.leaders}/>
+      );
+  };
   return (
     <div>
         <Header />
@@ -48,6 +56,7 @@ class Main extends Component {
               <Route exact path='/menu' component={() => <Menu dishes={this.state.dishes} />} />
               <Route path='/menu/:dishId' component={DishWithId}/>
               <Route exact path='/contactus' component={Contact} />
+              <Route path='/aboutus' component={Leader}/>
               <Redirect to="/home" />
           </Switch>
         <Footer />
