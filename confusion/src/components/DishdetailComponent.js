@@ -5,7 +5,8 @@ import { Card, CardImg, CardBody,CardText, CardTitle,
 import {Control , LocalForm , Errors} from 'react-redux-form';
 import {Link } from 'react-router-dom';
 import {Loading} from './LoadingComponent'
-    // changeTime(date){
+import { baseUrl } from '../shared/baseUrl';
+// changeTime(date){
     //     return new Date(date).toLocaleDateString("en-US",{
     //         year:"numeric",
     //         month:"short",
@@ -108,7 +109,7 @@ import {Loading} from './LoadingComponent'
         if (dish!=null){
             return(
                 <Card>
-                    <CardImg width="100%" src={dish.image} alt={dish.name} />
+                    <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                     <CardBody>
                         <CardTitle className="navbar-brand">{dish.name}</CardTitle>
                         <CardText>{dish.description}</CardText>
