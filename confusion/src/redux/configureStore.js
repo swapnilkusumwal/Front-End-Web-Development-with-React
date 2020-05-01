@@ -3,7 +3,6 @@ import {Dishes} from './dishes';
 import {Comments} from './comments';
 import {Promotions} from './promotions';
 import {Leaders} from './leaders';
-import { DISHES } from '../shared/dishes';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import {createForms} from 'react-redux-form';
