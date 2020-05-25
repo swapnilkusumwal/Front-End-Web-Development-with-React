@@ -9,7 +9,7 @@ function About(props) {
     
     function RenderLeader({leader}){
         return(
-            <div key={leader.id} className="col-12 mt-5">
+            <div key={leader._id} className="col-12 mt-5">
                 <Fade in>
                     <Media tag="li" >
                         <Media left>
@@ -29,7 +29,7 @@ function About(props) {
     function RenderLeaders(){
         const leaders = props.leaders.leaders.map((leader) => {
             return (
-                <RenderLeader key={leader.id} leader={leader}/>
+                <RenderLeader key={leader._id} leader={leader}/>
             );
         });
         if(props.isLoading){
@@ -45,7 +45,7 @@ function About(props) {
             return (
                 <div className="container">
                     <div className="row">
-                        <h4>{this.props.errMess}</h4>
+                        <h4>{props.errMess}</h4>
                     </div>
                 </div>
             )

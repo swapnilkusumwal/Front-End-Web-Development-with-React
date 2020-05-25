@@ -1,7 +1,7 @@
 import React,{Component} from "react";
 import { Card, CardImg, CardBody,CardText, CardTitle,
         Breadcrumb,BreadcrumbItem,Button,Modal,ModalBody,
-        ModalHeader,Row,Col,Label} from "reactstrap";
+        ModalHeader,Row,Col,Label, CardImgOverlay} from "reactstrap";
 import {Control , LocalForm , Errors} from 'react-redux-form';
 import {Link } from 'react-router-dom';
 import {Loading} from './LoadingComponent'
@@ -106,8 +106,7 @@ import {FadeTransform,Fade,Stagger} from 'react-animation-components';
         
     }
 
-    function RenderDish({dish}){
-        
+    function RenderDish({dish,favorite,postFavorite}){
         if (dish!=null){
             return(
                 <FadeTransform in
@@ -116,6 +115,15 @@ import {FadeTransform,Fade,Stagger} from 'react-animation-components';
                 }}>
                     <Card>
                         <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
+                        <CardImgOverlay>
+                            <Button outline color="primary" onClick={()=>favorite ? console.log('Already favorite'):postFavorite(dish._id)}>
+                            {favorite?
+                                <span className="fa fa-heart"></span>
+                                :
+                                <span className="fa fa-heart-o"></span>
+                            }
+                            </Button>
+                        </CardImgOverlay>
                         <CardBody>
                             <CardTitle className="navbar-brand">{dish.name}</CardTitle>
                             <CardText>{dish.description}</CardText>
@@ -138,7 +146,7 @@ import {FadeTransform,Fade,Stagger} from 'react-animation-components';
                 // console.log(date);
                 return (
                     <Fade in>
-                        <li key={comments.id}>
+                        <li key={comments._id}>
                             <div>
                                 <p>{comments.comment}</p>
                                 <p>-- {comments.author} , {new Intl.DateTimeFormat('en-US' , {year :'numeric', month: 'short',day:'2-digit' }).format(new Date(Date.parse(comments.date)))}</p>
@@ -181,7 +189,7 @@ import {FadeTransform,Fade,Stagger} from 'react-animation-components';
             return (
                 <div className="container">
                     <div className="row">
-                        <h4>{this.props.errMess}</h4>
+                        <h4>{props.errMess}</h4>
                     </div>
                 </div>
             )
@@ -205,12 +213,15 @@ import {FadeTransform,Fade,Stagger} from 'react-animation-components';
                     </div>
                     <div className="row">
                         <div className="col-12 col-md-5 m-1">
-                            <RenderDish dish={props.dish} />
+                            <RenderDish dish={props.dish}
+                                postFavorite={props.postFavorite}
+                                dishId={props.dish._id}
+                                favorite={props.favorite} />
                         </div>
                         <div className="col-12 col-md-5 m-1">
                             <RenderComment comments={props.comments}
                             postComment={props.postComment}
-                            dishId={props.dish.id}/ >
+                            dishId={props.dish._id}/ >
                         </div>
                     </div>
                 </div>
