@@ -235,7 +235,7 @@
     {
       "id": 1,
       "name": "Dhanasekaran Witherspoon",
-      "image": "images/alberto.png",
+      "image": "images/alberto1.png",
       "designation": "Chief Food Officer",
       "abbr": "CFO",
       "featured": false,
@@ -244,7 +244,7 @@
     {
       "id": 2,
       "name": "Agumbe Tang",
-      "image": "images/alberto.png",
+      "image": "images/alberto2.png",
       "designation": "Chief Taste Officer",
       "abbr": "CTO",
       "featured": false,
@@ -253,7 +253,7 @@
     {
       "id": 3,
       "name": "Alberto Somayya",
-      "image": "images/alberto.png",
+      "image": "images/alberto3.png",
       "designation": "Executive Chef",
       "abbr": "EC",
       "featured": true,

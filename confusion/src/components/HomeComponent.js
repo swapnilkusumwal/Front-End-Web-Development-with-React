@@ -4,7 +4,9 @@ import {Loading} from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 import {FadeTransform} from 'react-animation-components';
 function RenderCard({item,isLoading,errMess}){
-    if(isLoading){
+    console.log("HIIII");
+    console.log(item);
+    if(isLoading || item===undefined){
         return(
             <Loading/>
         );
@@ -16,6 +18,7 @@ function RenderCard({item,isLoading,errMess}){
         );
     }
     else{
+        // console.log("GELL");
         return (
             <FadeTransform in
                 transformProps={{
@@ -36,6 +39,8 @@ function RenderCard({item,isLoading,errMess}){
 
 
 function Home(props){
+    console.log("BYEEE");
+    console.log(props);
     return(
         <div className="container">
             <div className="row">
