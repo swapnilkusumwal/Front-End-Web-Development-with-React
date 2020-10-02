@@ -2,7 +2,7 @@ import React,{Component} from "react";
 import { Card, CardImg, CardBody,CardText, CardTitle,
         Breadcrumb,BreadcrumbItem,Button,Modal,ModalBody,
         ModalHeader,Row,Col,Label, CardImgOverlay} from "reactstrap";
-import {Control , LocalForm , Errors} from 'react-redux-form';
+import {Control , LocalForm } from 'react-redux-form';
 import {Link } from 'react-router-dom';
 import {Loading} from './LoadingComponent'
 import { baseUrl } from '../shared/baseUrl';
@@ -16,8 +16,8 @@ import {FadeTransform,Fade,Stagger} from 'react-animation-components';
     //     });
     // }
 
-    const minLength=(len)=>(val)=>(val) && ((val.length)>=len);
-    const maxLength=(len)=>(val)=>!(val) || ((val.length)<=len);
+    // const minLength=(len)=>(val)=>(val) && ((val.length)>=len);
+    // const maxLength=(len)=>(val)=>!(val) || ((val.length)<=len);
     class CommentForm extends Component{
         constructor(props){
             super(props);
@@ -64,7 +64,7 @@ import {FadeTransform,Fade,Stagger} from 'react-animation-components';
                                     </Control.select>
                                 </Col>
                             </Row>
-                            <Row className="form-group">
+                            {/* <Row className="form-group">
                                 <Col md={12}>
                                     <Label htmlFor="author" >Your Name</Label>
                                 </Col>
@@ -83,7 +83,7 @@ import {FadeTransform,Fade,Stagger} from 'react-animation-components';
                                         maxLength:'Must be 15 characters or less'
                                     }}/>
                                 </Col>
-                            </Row>
+                            </Row> */}
                             <Row className="form-group">
                                 <Col md={12}>
                                     <Label htmlFor="comment" >Comment</Label>
@@ -142,14 +142,13 @@ import {FadeTransform,Fade,Stagger} from 'react-animation-components';
     function RenderComment({comments,postComment,dishId}){
         if(comments!=null){
             let list= comments.map((comments) =>{
-                // let date=comments.date;
-                // console.log(date);
+                let date=comments.createdAt;
                 return (
                     <Fade in>
                         <li key={comments._id}>
                             <div>
                                 <p>{comments.comment}</p>
-                                <p>-- {comments.author} , {new Intl.DateTimeFormat('en-US' , {year :'numeric', month: 'short',day:'2-digit' }).format(new Date(Date.parse(comments.date)))}</p>
+                                <p>-- {comments.author.firstname} {comments.author.lastname} , {new Intl.DateTimeFormat('en-US' , {year :'numeric', month: 'short',day:'2-digit' }).format(new Date(Date.parse(date)))}</p>
                             </div>
                         </li>
                     </Fade>

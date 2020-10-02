@@ -9,7 +9,7 @@ import About from './AboutComponent';
 import Favorite from './FavoriteComponent';
 import {Switch , Route, Redirect , withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import { postComment, postFeedback, fetchDishes, fetchComments, fetchPromos, fetchLeaders, loginUser, logoutUser, fetchFavorites, postFavorite, deleteFavorite } from '../redux/ActionCreators';
+import { postComment, postFeedback, fetchDishes, fetchComments, fetchPromos, fetchLeaders, loginUser, signupUser, logoutUser, fetchFavorites, postFavorite, deleteFavorite } from '../redux/ActionCreators';
 import {actions} from 'react-redux-form';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 const mapStateToProps = state =>{
@@ -33,6 +33,7 @@ const mapDispatchToProps =(dispatch) =>({
   fetchLeaders:()=>{dispatch(fetchLeaders())},
   fetchFavorites: () => dispatch(fetchFavorites()),
   loginUser: (creds) => dispatch(loginUser(creds)),
+  signupUser: (creds) => dispatch(signupUser(creds)),
   logoutUser: () => dispatch(logoutUser()),
   postFavorite: (dishId) => dispatch(postFavorite(dishId)),
   deleteFavorite: (dishId) => dispatch(deleteFavorite(dishId))
@@ -68,9 +69,8 @@ const DishWithId = ({match}) => {
         if(Array.isArray(this.props.favorites.favorites))
         this.props.favorites.favorites=this.props.favorites.favorites[0];
       }
-      
       return(
-        (this.props.auth.isAuthenticated && !this.props.favorites.isLoading)
+        (this.props.auth.isAuthenticated && !this.props.favorites.isLoading && this.props.favorites.favorites!==undefined && this.props.favorites.favorites!==null)
         ?
         <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish._id === match.params.dishId)[0]}
           isLoading={this.props.dishes.isLoading}
@@ -117,6 +117,7 @@ const DishWithId = ({match}) => {
     <div>
         <Header auth={this.props.auth} 
           loginUser={this.props.loginUser} 
+          signupUser={this.props.signupUser} 
           logoutUser={this.props.logoutUser} 
           /> 
         <TransitionGroup >

@@ -8,7 +8,7 @@ export const addComment=(comment)=>({
 
 export const postComment=(dishId,rating,author,comment)=>(dispatch)=>{
     const newComment={
-      dishId:dishId,
+      dish:dishId,
       rating:rating,
       author:author,
       comment:comment
@@ -57,12 +57,15 @@ export const postFeedback=(firstname,lastname,telnum,email,agree,contactType,mes
     contactType: contactType,
     message: message
   }
+  const bearer = 'Bearer ' + localStorage.getItem('token');
+    
   newFeedback.date=new Date().toISOString();
   return fetch(baseUrl+'feedback',{
     method:'POST',
     body:JSON.stringify(newFeedback),
     headers:{
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': bearer
     },
     credentials:'same-origin'
   })
@@ -80,7 +83,11 @@ export const postFeedback=(firstname,lastname,telnum,email,agree,contactType,mes
         throw errmess;
   })
   .then(response => response.json())
-  .then(response => alert('Thank you for your feedback!\n' + JSON.stringify(response)))
+  .then(response => {
+    let data="Name: "+response.firstname+" "+response.lastname+"\n"+"Ph no: "+response.telnum+"\n"+
+    "Email: "+response.email+"\n"+"Feedback: "+response.message;
+    alert('Thank you for your feedback!\n\n'+data)
+  })
   .catch(error=>{console.log('Post Feedback ',error.message)
     alert('Your feedback could not be posted\nError: '+error.message)})
 };
@@ -248,7 +255,6 @@ export const loginError = (message) => {
 }
 
 export const loginUser = (creds) => (dispatch) => {
-  // We dispatch requestLogin to kickoff the call to the API
   dispatch(requestLogin(creds))
 
   return fetch(baseUrl + 'users/login', {
@@ -287,6 +293,56 @@ export const loginUser = (creds) => (dispatch) => {
       }
   })
   .catch(error => dispatch(loginError(error.message)))
+};
+
+export const requestSignup = (creds) => {
+  return {
+      type: ActionTypes.SIGNUP_REQUEST,
+      creds
+  }
+}
+
+export const signupError = (message) => {
+  return {
+      type: ActionTypes.SIGNUP_FAILURE,
+      message
+  }
+}
+
+export const signupUser = (creds) => (dispatch) => {
+  dispatch(requestSignup(creds))
+
+  return fetch(baseUrl + 'users/signup', {
+      method: 'POST',
+      headers: { 
+          'Content-Type':'application/json' 
+      },
+      body: JSON.stringify(creds)
+  })
+  .then(response => {
+      if (response.ok) {
+          return response;
+      } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+      }
+      },
+      error => {
+          throw error;
+      })
+  .then(response => response.json())
+  .then(response => {
+      if (response.success) {
+        alert("Signup Successful!");
+      }
+      else {
+          var error = new Error('Error ' + response.status);
+          error.response = response;
+          throw error;
+      }
+  })
+  .catch(error => dispatch(signupError(error.message)))
 };
 
 export const requestLogout = () => {
